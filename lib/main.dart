@@ -25,13 +25,12 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      title: 'Localizations Sample App',
+      title: "You Vs. Wild",
       home: Scaffold(
         appBar: AppBar(
-          // ignore: prefer_const_constructors
-          title: Text("title").tr(),
+          title: Text("title".tr()),
         ),
-        body: const Hud(),
+        body: const SafeArea(child: Hud()),
       ),
     );
   }

@@ -10,7 +10,6 @@ class Info {
   int food = 100;
   int water = 100;
   int energy = 100;
-  double temperature = 37;
 
   toMap() => {
         "hud.health".tr(): health.toDouble(),
@@ -18,6 +17,12 @@ class Info {
         "hud.water".tr(): water.toDouble(),
         "hud.energy".tr(): energy.toDouble(),
       };
+}
+
+class Clock {}
+
+class Timer {
+  double startTime = 0.0;
 }
 
 class Player {
@@ -68,7 +73,11 @@ class _HudState extends State<Hud> {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
         child: Column(
-          children: [buildHud(context)],
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 180),
+              child: buildHud(context),),
+          ],
         ));
   }
 
