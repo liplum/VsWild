@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:vs_wild/hud.dart';
 
+const title = "You Vs. Wild";
+
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -25,10 +27,10 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      title: "You Vs. Wild",
+      title: title,
       home: Scaffold(
         appBar: AppBar(
-          title: Text("title".tr()),
+          title: const Text(title),
         ),
         body: const SafeArea(child: Hud()),
       ),
