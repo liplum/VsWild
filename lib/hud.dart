@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:vs_wild/registry.dart';
 
 import 'game/player.dart';
+import 'type/action.dart' as act;
 
 class Tile extends StatelessWidget {
   final double pad;
@@ -61,6 +63,16 @@ class _HudState extends State<Hud> {
                     constraints: const BoxConstraints(maxHeight: 180),
                     child: buildHud(context),
                   ),
+                  Expanded(
+                      child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxHeight: 180),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ActionsPanel(
+                        player: player,
+                      ),
+                    ),
+                  )),
                 ],
               ))),
     );
@@ -88,13 +100,38 @@ class _HudState extends State<Hud> {
   }
 }
 
-class Actions extends StatelessWidget {
-  const Actions({super.key, required this.player});
+class ActionsPanel extends StatelessWidget {
+  const ActionsPanel({super.key, required this.player});
 
   final Player player;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GridView.count(
+      primary: false,
+      crossAxisCount: 4,
+      children: ActionRegistry.all
+          .map((e) => ActionButton(player: player, action: e))
+          .toList(),
+    );
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  const ActionButton({super.key, required this.player, required this.action});
+
+  final Player player;
+  final act.Action action;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () {
+          action.onAct(player);
+        },
+        child: Text(
+          action.name,
+          style: const TextStyle(fontSize: 18),
+        ));
   }
 }
