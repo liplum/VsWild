@@ -2,32 +2,9 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:pie_chart/pie_chart.dart';
 
-class Info {
-  int health = 100;
-  int food = 100;
-  int water = 100;
-  int energy = 100;
-
-  toMap() => {
-        "hud.health".tr(): health.toDouble(),
-        "hud.food".tr(): food.toDouble(),
-        "hud.water".tr(): water.toDouble(),
-        "hud.energy".tr(): energy.toDouble(),
-      };
-}
-
-class Clock {}
-
-class Timer {
-  double startTime = 0.0;
-}
-
-class Player {
-  final info = Info();
-}
+import 'game/player.dart';
 
 class Tile extends StatelessWidget {
   final double pad;
@@ -70,15 +47,23 @@ class _HudState extends State<Hud> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-        child: Column(
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 180),
-              child: buildHud(context),),
-          ],
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("title".tr()),
+      ),
+      body: SafeArea(
+          child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              child: Column(
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxHeight: 180),
+                    child: buildHud(context),
+                  ),
+                ],
+              ))),
+    );
   }
 
   buildHud(BuildContext context) {
@@ -104,7 +89,9 @@ class _HudState extends State<Hud> {
 }
 
 class Actions extends StatelessWidget {
-  const Actions({super.key});
+  const Actions({super.key, required this.player});
+
+  final Player player;
 
   @override
   Widget build(BuildContext context) {

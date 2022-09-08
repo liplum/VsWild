@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:vs_wild/hud.dart';
-
-const title = "You Vs. Wild";
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
   runApp(
     EasyLocalization(
         supportedLocales: const [Locale('en')],
@@ -14,6 +16,15 @@ main() async {
         fallbackLocale: const Locale('en'),
         child: const MyApp()),
   );
+
+  doWhenWindowReady(() {
+    const initialSize = Size(500, 800);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
+
 }
 
 class MyApp extends StatelessWidget {
@@ -27,13 +38,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(title),
-        ),
-        body: const SafeArea(child: Hud()),
-      ),
+      home: const Hud(),
     );
   }
 }
